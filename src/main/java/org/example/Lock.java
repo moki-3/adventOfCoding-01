@@ -11,25 +11,26 @@ import static java.lang.Integer.parseInt;
 public class Lock {
     private int lastRotation = 50;
     private int zeroCounter = 0;
+    private int counter = 0;
 
     private void turn(String instruction){
         char first = instruction.charAt(0);
-        int ergebnis;
         int calc = parseInt(instruction.substring(1));
-        if(first == 'R'){
-            ergebnis = calc % lastRotation;
-        }else{
-            ergebnis = (calc * (-1)) % lastRotation;
-        }
+        int direction = first == 'R' ? calc : -calc;
+        int ergebnis = turnInstruction(direction, lastRotation);
+        lastRotation = ergebnis;
+        counter++;
+    }
 
-
-
-        if(ergebnis == 0){
+    private int turnInstruction(int direction, int startValue) {
+        int rersult = direction % startValue;
+        System.out.println(rersult == 0 ? counter + "\t--->\t" +  rersult : counter + "\t----\t" +  rersult);
+        if(rersult == 0){
             zeroCounter++;
         }
-
-
+        return rersult < 0 ? rersult + startValue : rersult;
     }
+
 
     public void turnFromFile(String resourcePath) throws IOException {
         try (InputStream is = getClass().getClassLoader().getResourceAsStream(resourcePath);
@@ -42,6 +43,10 @@ public class Lock {
             System.err.println("Error reading resource: " + resourcePath);
             e.printStackTrace();
         }
+    }
+
+    public int getZeroCounter(){
+        return zeroCounter;
     }
 
 }
