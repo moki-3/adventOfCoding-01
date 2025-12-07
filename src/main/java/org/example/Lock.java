@@ -17,18 +17,17 @@ public class Lock {
         char first = instruction.charAt(0);
         int calc = parseInt(instruction.substring(1));
         int direction = first == 'R' ? calc : -calc;
-        int ergebnis = turnInstruction(direction, lastRotation);
-        lastRotation = ergebnis;
+        lastRotation = turnInstruction(lastRotation + direction);
         counter++;
     }
 
-    private int turnInstruction(int direction, int startValue) {
-        int rersult = direction % startValue;
+    private int turnInstruction(int direction) {
+        int rersult = direction % 100;
         System.out.println(rersult == 0 ? counter + "\t--->\t" +  rersult : counter + "\t----\t" +  rersult);
         if(rersult == 0){
             zeroCounter++;
         }
-        return rersult < 0 ? rersult + startValue : rersult;
+        return rersult < 0 ? rersult + 100 : rersult;
     }
 
 
