@@ -48,4 +48,14 @@ public class Lock {
         return zeroCounter;
     }
 
+    public static void main(String[] args) {
+        try {
+            Lock l = new Lock();
+        l.turnFromFile("input.txt");
+        System.out.println("Es wurde " + l.getZeroCounter() + " mal auf die Stelle 0 gedreht");
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+    }
+
 }
